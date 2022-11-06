@@ -14,6 +14,8 @@ interface AppRepository {
 
     fun update(entity: GameEntity)
 
+    suspend fun generateQuestion()
+
     fun getLevel(): Flow<String>
 
     suspend fun openNextLevel(level: Int, number: Int)

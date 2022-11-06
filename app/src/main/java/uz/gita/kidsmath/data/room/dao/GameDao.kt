@@ -24,4 +24,7 @@ interface GameDao : BaseDao<GameEntity> {
 
     @Query("Select * From game Where game.level = :level  and game.number = :number")
     fun getByNumber(level: Int, number: Int): Flow<GameEntity>
+
+    @Query("Delete  from game")
+    fun deleteAll()
 }

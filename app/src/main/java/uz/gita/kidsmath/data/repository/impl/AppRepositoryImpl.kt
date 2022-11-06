@@ -1,5 +1,6 @@
 package uz.gita.kidsmath.data.repository.impl
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -38,9 +39,6 @@ class AppRepositoryImpl @Inject constructor(
                         "+" -> {
                             c = a.plus(b)
                         }
-                        "-" -> {
-                            c = a.minus(b)
-                        }
                         "*" -> {
                             c = a * b
                         }
@@ -51,29 +49,30 @@ class AppRepositoryImpl @Inject constructor(
                 val type = object : TypeToken<List<Question>>() {}.type
                 val s = gson.toJson(questionList, type)
 
-                list.add(GameEntity(0, 3, "1", i + 1, s, false, 0))
+                list.add(GameEntity(0, 3, 1, i + 1, s, false, 0, 0))
             }
 
             dao.insert(list)
             shp.firstEasy = true
         }
-
+        Log.d("DDD", shp.firstEasy.toString())
         dao.getAllEasyLevel().map {
             emit(it)
         }.collect()
+
     }.flowOn(Dispatchers.IO)
 
     override fun getAllMediumLevel(): Flow<List<GameEntity>> = flow {
+
         if (!shp.firstMedium) {
             val list = ArrayList<GameEntity>()
-
             for (i in 0..59) {
 
                 val questionList = ArrayList<Question>()
 
                 for (j in 0..5) {
-                    val a = Random.nextInt(0, 60)
-                    val b = Random.nextInt(0, 60)
+                    val a = Random.nextInt(30, 60)
+                    val b = Random.nextInt(30, 60)
                     var c = 0
                     val operationList = operators()
                     val randomIndex = Random.nextInt(operationList.size);
@@ -83,9 +82,6 @@ class AppRepositoryImpl @Inject constructor(
                         "+" -> {
                             c = a.plus(b)
                         }
-                        "-" -> {
-                            c = a.minus(b)
-                        }
                         "*" -> {
                             c = a * b
                         }
@@ -96,21 +92,21 @@ class AppRepositoryImpl @Inject constructor(
                 val type = object : TypeToken<List<Question>>() {}.type
                 val s = gson.toJson(questionList, type)
 
-                list.add(GameEntity(0, 5, "2", i + 1, s, false, 0))
+                list.add(GameEntity(0, 5, 2, i + 1, s, false, 0, 0))
             }
-
             dao.insert(list)
             shp.firstMedium = true
         }
 
-        dao.getAllEasyLevel().map {
+        dao.getAllMediumLevel().map {
+            Log.d("TTT", it.size.toString())
             emit(it)
-        }
-    }
+        }.collect()
+    }.flowOn(Dispatchers.IO)
 
     override fun getAllHardLevel(): Flow<List<GameEntity>> = flow {
 
-        if (!shp.firstMedium) {
+        if (!shp.firstHard) {
 
             val list = ArrayList<GameEntity>()
 
@@ -119,8 +115,8 @@ class AppRepositoryImpl @Inject constructor(
                 val questionList = ArrayList<Question>()
 
                 for (j in 0..7) {
-                    val a = Random.nextInt(0, 90)
-                    val b = Random.nextInt(0, 90)
+                    val a = Random.nextInt(60, 90)
+                    val b = Random.nextInt(60, 90)
                     var c = 0
                     val operationList = operators()
                     val randomIndex = Random.nextInt(operationList.size);
@@ -143,28 +139,28 @@ class AppRepositoryImpl @Inject constructor(
                 val type = object : TypeToken<List<Question>>() {}.type
                 val s = gson.toJson(questionList, type)
 
-                list.add(GameEntity(0, 7, "3", i + 1, s, false, 0))
+                list.add(GameEntity(0, 7, 3, i + 1, s, false, 0, 0))
             }
 
             dao.insert(list)
-            shp.firstMedium = true
+            shp.firstHard = true
         }
 
         dao.getAllHardLevel().map {
             emit(it)
-        }
-    }
+        }.collect()
+    }.flowOn(Dispatchers.IO)
 
     override fun update(entity: GameEntity) = dao.update(entity)
 
-    override fun getLevel(): Flow<String> = flow {
-        emit(shp.level)
-    }
+    override fun getLevel(): Flow<String> = flow { emit(shp.level) }
 
     override suspend fun openNextLevel(level: Int, number: Int) {
+
         dao.getAllLevel().map { it ->
             it.map {
-                if (it.level.toInt() == level && it.number == number) {
+                if (it.level == level && it.number == number) {
+                    Log.d("TTT", "Salom")
                     it.state = true
                     dao.update(it)
                 }
@@ -174,6 +170,21 @@ class AppRepositoryImpl @Inject constructor(
 
     override suspend fun setLevel(level: String) {
         shp.level = level
+    }
+
+    override suspend fun generateQuestion() {
+
+        Log.d("DDD", shp.firstEasy.toString())
+        Log.d("DDD", "Salom")
+
+        dao.deleteAll()
+
+        shp.firstHard = false
+        shp.firstEasy = false
+        shp.firstMedium = false
+
+        Log.d("DDD", shp.firstEasy.toString())
+
     }
 
     override fun getByNumber(level: Int, number: Int): Flow<List<Question>> = flow {
@@ -187,6 +198,6 @@ class AppRepositoryImpl @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
     private fun operators(): ArrayList<String> {
-        return arrayListOf("+", "-", "*")
+        return arrayListOf("+", "*")
     }
 }

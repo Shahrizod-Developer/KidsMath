@@ -10,13 +10,14 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity(tableName = "game")
 data class GameEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     val count: Int,
-    val level: String,
+    val level: Int,
     val number: Int,
     @ColumnInfo(name = "questions")
     val questionList: String,
     var state: Boolean,
-    val time: Long
+    val time: Long,
+    val star: Int
 ) : Parcelable

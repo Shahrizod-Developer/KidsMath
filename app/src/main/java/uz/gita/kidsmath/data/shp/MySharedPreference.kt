@@ -14,7 +14,7 @@ class MySharedPreference @Inject constructor(@ApplicationContext context: Contex
         }
 
     var level: String
-        get() = sharedPreferences.getString("level", "4x4\neasy").toString()
+        get() = sharedPreferences.getString("level", "easy").toString()
         set(level) {
             editor.putString("level", level).apply()
         }

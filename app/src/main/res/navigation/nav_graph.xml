@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_hgraph"
+    app:startDestination="@id/splashScreen">
+
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="uz.gita.kidsmath.presentation.ui.screen.fragment.SplashScreen"
+        android:label="SplashScreen">
+        <action
+            android:id="@+id/action_splashScreen_to_menuScreen"
+            app:destination="@id/menuScreen"
+            app:popUpTo="@id/nav_hgraph" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameScreen"
+        android:name="uz.gita.kidsmath.presentation.ui.screen.fragment.GameScreen"
+        android:label="GameScreen" >
+        <argument
+            android:name="question"
+            app:argType="uz.gita.kidsmath.data.room.entity.GameEntity" />
+    </fragment>
+    <fragment
+        android:id="@+id/levelScreen"
+        android:name="uz.gita.kidsmath.presentation.ui.screen.fragment.LevelScreen"
+        android:label="LevelScreen">
+        <action
+            android:id="@+id/action_levelScreen_to_gameScreen"
+            app:destination="@id/gameScreen" />
+        <argument
+            android:name="level"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuScreen"
+        android:name="uz.gita.kidsmath.presentation.ui.screen.fragment.MenuScreen"
+        android:label="MenuScreen">
+        <action
+            android:id="@+id/action_menuScreen_to_levelScreen"
+            app:destination="@id/levelScreen" />
+    </fragment>
+</navigation>

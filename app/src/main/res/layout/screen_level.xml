@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/level_back">
+
+    <com.airbnb.lottie.LottieAnimationView
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_180sdp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/birds" />
+
+    <ImageView
+
+        android:id="@+id/back"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:background="@drawable/circle_back"
+        android:elevation="@dimen/_10sdp"
+        android:outlineAmbientShadowColor="#8B3D1E"
+        android:outlineSpotShadowColor="#8B3D1E"
+        android:padding="@dimen/_15sdp"
+        android:src="@drawable/left_arrow_svgrepo_com__1_"
+        app:layout_constraintBottom_toBottomOf="@id/level"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/level" />
+
+    <ImageView
+
+        android:id="@+id/info"
+        android:layout_width="@dimen/_44sdp"
+        android:layout_height="@dimen/_44sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/circle_back"
+        android:padding="@dimen/_14sdp"
+        android:paddingBottom="@dimen/_3sdp"
+        android:src="@drawable/info_svgrepo_com__1_"
+        app:layout_constraintBottom_toBottomOf="@id/level"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/level"
+        app:tint="#8B3D1E" />
+
+
+    <TextView
+
+        android:id="@+id/level"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/for_title"
+        android:fontFamily="@font/game"
+        android:gravity="center"
+        android:letterSpacing="0.2"
+        android:shadowColor="@color/black"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="3"
+        android:text="Easy"
+        android:textColor="#8B3D1E"
+        android:textSize="@dimen/_18sdp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/back_style"
+        android:overScrollMode="never"
+        android:padding="@dimen/_5sdp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/level"
+        app:spanCount="3"
+        tools:itemCount="60"
+        tools:listitem="@layout/item_level" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
