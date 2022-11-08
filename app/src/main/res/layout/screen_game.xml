@@ -22,15 +22,24 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/birds" />
 
-    <ImageView
+    <TextView
 
         android:id="@+id/back"
-        android:layout_width="@dimen/_50sdp"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_44sdp"
         android:layout_marginStart="@dimen/_10sdp"
-        android:background="@drawable/circle_back"
-        android:padding="@dimen/_15sdp"
-        android:src="@drawable/left_arrow_svgrepo_com__1_"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/back"
+        android:gravity="center"
+        android:paddingBottom="@dimen/_5sdp"
+        android:shadowColor="@color/black"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="3"
+        android:text="Exit"
+        android:textColor="#8B3D1E"
+        android:textSize="@dimen/_18sdp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/level"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/level" />
@@ -116,8 +125,8 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:background="@drawable/circle_back"
             android:fontFamily="@font/game"
-            android:letterSpacing="0.1"
             android:gravity="center"
+            android:letterSpacing="0.1"
             android:shadowColor="@color/black"
             android:shadowDx="3"
             android:shadowDy="3"
@@ -226,14 +235,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.4" />
 
-        <ImageView
+        <TextView
 
             android:id="@+id/ques"
-            android:layout_width="@dimen/_40sdp"
+            android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/back"
             android:fontFamily="@font/game"
             android:gravity="center"
-            android:src="@drawable/question_svgrepo_com"
             android:textColor="#8B3D1E"
             android:textSize="@dimen/_18sdp"
             android:textStyle="bold"
@@ -241,6 +250,19 @@
             app:layout_constraintLeft_toRightOf="@id/op"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/result" />
+
+        <LinearLayout
+
+            android:id="@+id/linear"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.33" />
 
         <TextView
 
@@ -253,8 +275,8 @@
             android:clickable="false"
             android:fontFamily="@font/game"
             android:gravity="center"
-            android:shadowColor="@color/black"
             android:letterSpacing="0.1"
+            android:shadowColor="@color/black"
             android:shadowDx="3"
             android:shadowDy="3"
             android:shadowRadius="3"
@@ -275,8 +297,8 @@
             android:clickable="false"
             android:fontFamily="@font/game"
             android:gravity="center"
-            android:shadowColor="@color/black"
             android:letterSpacing="0.1"
+            android:shadowColor="@color/black"
             android:shadowDx="3"
             android:shadowDy="3"
             android:shadowRadius="3"
@@ -300,8 +322,8 @@
             android:clickable="false"
             android:fontFamily="@font/game"
             android:gravity="center"
-            android:shadowColor="@color/black"
             android:letterSpacing="0.1"
+            android:shadowColor="@color/black"
             android:shadowDx="3"
             android:shadowDy="3"
             android:shadowRadius="3"
@@ -371,8 +393,8 @@
             android:background="@drawable/back"
             android:clickable="false"
             android:fontFamily="@font/game"
-            android:letterSpacing="0.1"
             android:gravity="center"
+            android:letterSpacing="0.1"
             android:shadowColor="@color/black"
             android:shadowDx="3"
             android:shadowDy="3"
@@ -386,6 +408,29 @@
 
         <TextView
 
+            android:id="@+id/text"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/back"
+            android:clickable="false"
+            android:fontFamily="@font/game"
+            android:gravity="center"
+            android:letterSpacing="0.1"
+            android:shadowColor="@color/black"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="3"
+            android:text="24"
+            android:textColor="#8B3D1E"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/ans5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+
             android:id="@+id/ans5"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_40sdp"
@@ -394,8 +439,8 @@
             android:clickable="false"
             android:fontFamily="@font/game"
             android:gravity="center"
-            android:shadowColor="@color/black"
             android:letterSpacing="0.1"
+            android:shadowColor="@color/black"
             android:shadowDx="3"
             android:shadowDy="3"
             android:shadowRadius="3"

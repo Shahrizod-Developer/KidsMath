@@ -139,6 +139,7 @@
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_100sdp"
         android:layout_gravity="center"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.175"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -148,6 +149,23 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/boys" />
+
+    <com.airbnb.lottie.LottieAnimationView
+
+        android:id="@+id/infos"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/info"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintLeft_toLeftOf="@id/info"
+        app:layout_constraintRight_toRightOf="@id/info"
+        app:layout_constraintTop_toTopOf="@id/info"
+        app:layout_constraintVertical_bias="0"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/info" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

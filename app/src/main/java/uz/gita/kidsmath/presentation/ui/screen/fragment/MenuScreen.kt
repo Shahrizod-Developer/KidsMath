@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import uz.gita.kidsmath.R
 import uz.gita.kidsmath.data.model.BackMusic
 import uz.gita.kidsmath.data.model.Birds
+import uz.gita.kidsmath.data.model.Wrong
 import uz.gita.kidsmath.data.shp.MySharedPreference
 import uz.gita.kidsmath.databinding.DialogInfoBinding
 import uz.gita.kidsmath.databinding.DilaogLevelBinding
@@ -93,7 +94,9 @@ class MenuScreen : Fragment(R.layout.screen_menu) {
         )
 
         dialogBinding.yes.setOnClickListener {
-            dialog.dismiss()
+            it.onClick {
+                dialog.dismiss()
+            }
         }
 
         dialog.setView(dialogBinding.root)

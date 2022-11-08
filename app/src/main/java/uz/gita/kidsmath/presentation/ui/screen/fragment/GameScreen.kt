@@ -17,6 +17,7 @@ import android.view.animation.TranslateAnimation
 import android.widget.Chronometer
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.core.graphics.green
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -34,6 +35,7 @@ import uz.gita.kidsmath.data.model.Wrong
 import uz.gita.kidsmath.data.room.entity.GameEntity
 import uz.gita.kidsmath.data.shp.MySharedPreference
 import uz.gita.kidsmath.databinding.DialogExitBinding
+import uz.gita.kidsmath.databinding.DialogWinBinding
 import uz.gita.kidsmath.databinding.ScreenGameBinding
 import uz.gita.kidsmath.presentation.adapter.QuestionAdapter
 import uz.gita.kidsmath.presentation.ui.viewmodel.GameScreenViewModel
@@ -44,6 +46,8 @@ import uz.gita.kidsmath.presentation.utils.onClick
 import uz.gita.kidsmath.presentation.utils.vibratePhone
 import java.text.SimpleDateFormat
 import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.sqrt
 import kotlin.random.Random
 
 
@@ -69,6 +73,8 @@ class GameScreen : Fragment(R.layout.screen_game) {
     private var oldY = 0f
     private var list = ArrayList<Question>()
     private var ansList = ArrayList<Int>()
+    private var g = 0f
+    private var h = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,12 +98,17 @@ class GameScreen : Fragment(R.layout.screen_game) {
         )
 
         dialogBinding.no.setOnClickListener {
-            dialog.dismiss()
+            it.onClick {
+                dialog.dismiss()
+            }
         }
 
         dialogBinding.yes.setOnClickListener {
-            viewModel.back()
-            dialog.dismiss()
+
+            it.onClick {
+                viewModel.back()
+                dialog.dismiss()
+            }
         }
 
         dialog.setView(dialogBinding.root)
@@ -132,13 +143,15 @@ class GameScreen : Fragment(R.layout.screen_game) {
 
         viewModel.getByNumber(args.question.level, number)
 
-        viewAnimate(binding.ans7, 1)
-
         viewModel.gameModelLiveData.onEach {
             setQuestion(it[0])
             generateAns(it[0])
             list = it as ArrayList<Question>
         }.launchIn(lifecycleScope)
+
+
+        binding.text.text = ""
+        animate()
 
         binding.ans1.setOnTouchListener { v, event ->
             check(v, event, binding.ans1, binding.result)
@@ -171,6 +184,8 @@ class GameScreen : Fragment(R.layout.screen_game) {
             check(v, event, binding.ans7, binding.result)
             true
         }
+        g = binding.ans7.x
+        h = binding.ans7.y
     }
 
 
@@ -179,6 +194,7 @@ class GameScreen : Fragment(R.layout.screen_game) {
         binding.numberTwo.text = question.numberTwo.toString()
         binding.operation.text = question.operation
     }
+
 
     @SuppressLint("SuspiciousIndentation")
     private fun check(
@@ -199,10 +215,23 @@ class GameScreen : Fragment(R.layout.screen_game) {
                 realTextView.x += dX
                 realTextView.y += dY
 
+                val dif = sqrt(
+                    (realTextView.x - binding.result.x).toDouble().pow(2.0)
+                            + (realTextView.y - binding.result.y).toDouble().pow(2.0)
+                )
+                val diff = sqrt(
+                    (realTextView.x - fX).toDouble().pow(2.0)
+                            + (realTextView.y - fY).toDouble().pow(2.0)
+                )
+
+                Log.d("JJJ", "realTextView = " + realTextView.text.toString())
+                Log.d("JJJ", "list[${k}] = " + list[k].result.toString())
                 if (realTextView.text.toString() == list[k].result.toString()
-                    && abs(targetTextView.y - realTextView.y) < 250
-                    && abs(targetTextView.x - realTextView.x) < 250
+                    && dif < 150
+                    && abs(realTextView.x - oldX) > 300
+                    && abs(realTextView.y - oldY) > 300
                 ) {
+                    Log.d("NNN", "Salom")
                     binding.result.text = realTextView.text
                     binding.ques.visibility = View.INVISIBLE
                     realTextView.x = binding.result.x
@@ -211,7 +240,10 @@ class GameScreen : Fragment(R.layout.screen_game) {
             }
             MotionEvent.ACTION_UP -> {
                 realTextView.z = 0f
-                if (realTextView.text.toString() == list[k].result.toString()) {
+                if (realTextView.text.toString() == list[k].result.toString()
+                    && (realTextView.x > (binding.linear.x)
+                            && realTextView.y > (binding.linear.y - binding.linear.height))
+                ) {
 
                     view.isEnabled = false
                     binding.result.text = realTextView.text
@@ -243,88 +275,25 @@ class GameScreen : Fragment(R.layout.screen_game) {
                             realTextView.y = oldY
                             realTextView.visibility = View.VISIBLE
 
-                            if (k == checkWin) {
-
-                                totalTime = SystemClock.elapsedRealtime()
-                                time.stop()
-
-                                dateFormat = SimpleDateFormat("sss")
-                                a = abs(startTime - totalTime)
-
-                                when (args.question.level) {
-
-                                    1 -> {
-                                        when (a) {
-                                            in 0..31000 -> {
-                                                star = 3
-                                            }
-                                            in 31000..46000 -> {
-                                                star = 2
-                                            }
-                                            in 46000..61000 -> {
-                                                star = 1
-                                            }
-                                        }
-                                    }
-                                    2 -> {
-                                        when (a) {
-                                            in 0..92000 -> {
-                                                star = 3
-                                            }
-                                            in 92000..122000 -> {
-                                                star = 2
-                                            }
-                                            in 122000..1520000 -> {
-                                                star = 1
-                                            }
-                                        }
-                                    }
-                                    3 -> {
-                                        when (a) {
-                                            in 0..183000 -> {
-                                                star = 3
-                                            }
-                                            in 183000..213000 -> {
-                                                star = 2
-                                            }
-                                            in 213000..243000 -> {
-                                                star = 1
-                                            }
-                                        }
-                                    }
-                                }
-
-                                if (number != 59 && star > 0) {
-                                    viewModel.saveResult(
-                                        GameEntity(
-                                            id = args.question.id,
-                                            questionList = args.question.questionList,
-                                            number = number,
-                                            star = star,
-                                            time = totalTime,
-                                            state = true,
-                                            level = args.question.level,
-                                            count = args.question.count
-                                        )
-                                    )
-                                    number++
-                                    viewModel.openNextLevel(args.question.level, number)
-                                }
-                                viewModel.back()
+                            if (k >= checkWin) {
+                                showResultDialog()
                             } else {
                                 setQuestion(list[k])
                                 generateAns(list[k])
                             }
-
                         }
                     }
                 } else {
 
-                    if (abs(targetTextView.y - realTextView.y) < 60
-                        && abs(targetTextView.x - realTextView.x) < 60
+                    if ((abs(targetTextView.y - realTextView.y) < 100
+                                && abs(targetTextView.x - realTextView.x) < 100)
+                        || (abs(binding.op.y - realTextView.y) < 100
+                                && abs(binding.op.x - realTextView.x) < 100)
                     ) {
-                        Wrong.create(requireContext())
-                        if (MySharedPreference.getInstance().music) Wrong.mediaPlayer.start()
+                        if (MySharedPreference.getInstance().music) {
+                            Wrong.create(requireContext())
+                            Wrong.mediaPlayer.start()
+                        }
                         if (MySharedPreference.getInstance().vibration) vibratePhone()
                     }
                     realTextView.x = oldX
@@ -338,8 +307,10 @@ class GameScreen : Fragment(R.layout.screen_game) {
     private fun generateAns(question: Question) {
         var shuffleList = ArrayList<Int>()
 
+        Log.d("MMM", "result = " + question.result.toString())
+
         when (question.result.toString().length) {
-            2 -> {
+            in 1..2 -> {
                 random(10, 99)
             }
             3 -> {
@@ -350,12 +321,11 @@ class GameScreen : Fragment(R.layout.screen_game) {
             }
         }
 
+        shuffleList.clear()
         shuffleList = ansList
         shuffleList.add(question.result)
         shuffleList.shuffle()
-        ansList = shuffleList
 
-        binding.ans1.text = ansList[0].toString()
         binding.ans1.z = 0f
         binding.ans2.z = 0f
         binding.ans3.z = 0f
@@ -363,14 +333,15 @@ class GameScreen : Fragment(R.layout.screen_game) {
         binding.ans5.z = 0f
         binding.ans6.z = 0f
         binding.ans7.z = 0f
-        binding.ans2.text = ansList[1].toString()
-        binding.ans3.text = ansList[2].toString()
-        binding.ans4.text = ansList[3].toString()
-        binding.ans5.text = ansList[4].toString()
-        binding.ans6.text = ansList[5].toString()
-        binding.ans7.text = ansList[6].toString()
+        binding.ans1.text = shuffleList[0].toString()
+        binding.ans2.text = shuffleList[1].toString()
+        binding.ans3.text = shuffleList[2].toString()
+        binding.ans4.text = shuffleList[3].toString()
+        binding.ans5.text = shuffleList[4].toString()
+        binding.ans6.text = shuffleList[5].toString()
+        binding.ans7.text = shuffleList[6].toString()
 
-        Log.d("MMM", ansList.toString())
+        Log.d("MMM", "answers = " + ansList.toString())
     }
 
     private fun random(n: Int, m: Int) {
@@ -378,50 +349,164 @@ class GameScreen : Fragment(R.layout.screen_game) {
         for (i in 0..5) {
             ansList.add(Random.nextInt(n, m))
         }
+        Log.d("MMM", "wrong answers = " + ansList.toString())
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun showResultDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        val binding = DialogWinBinding.inflate(layoutInflater)
+        builder.setView(binding.root)
+        val alertDialog = builder.create()
 
-    private fun animatorSetY(view: View, a: Int) {
+        totalTime = SystemClock.elapsedRealtime()
+        time.stop()
 
-        if (a == 1) {
-            oldX = binding.ans1.x
-            oldY = binding.ans1.y
-        }
 
-        val rotation = ObjectAnimator.ofFloat(view, "rotation", 0f, 0f)
-        val transitionX =
-            ObjectAnimator.ofFloat(
-                view,
-                "rotation",
-                view.width.toFloat(),
-                -(binding.result.y - binding.ans7.y)
-            )
-        val transitionX2 = ObjectAnimator.ofFloat(
-            view,
-            "translationY",
-            0f,
-            -(abs(binding.result.y - binding.ans7.y))
-        )
+        dateFormat = SimpleDateFormat("sss")
+        a = abs(startTime - totalTime)
+        binding.time.text = "Time : " + a / 1000 + " second"
+        when (args.question.level) {
 
-        AnimatorSet().apply {
-            play(rotation).after(transitionX).with(transitionX2)
-            start()
-        }
-    }
-
-    private fun viewAnimate(view: View, a: Int) {
-        view.animate()
-            .setDuration(3000)
-            .withStartAction { animatorSetY(view, a) }
-            .withEndAction {
-                if (a == -1) {
-                    binding.ans7.y = binding.result.y
-                    binding.ans7.x = binding.result.x
-                } else {
-                    binding.ans7.y = oldY
-                    binding.ans7.x = oldX
+            1 -> {
+                when (a) {
+                    in 0..31000 -> {
+                        star = 3
+                    }
+                    in 31000..46000 -> {
+                        star = 2
+                    }
+                    in 46000..61000 -> {
+                        star = 1
+                    }
                 }
             }
+            2 -> {
+                when (a) {
+                    in 0..92000 -> {
+                        star = 3
+                    }
+                    in 92000..122000 -> {
+                        star = 2
+                    }
+                    in 122000..1520000 -> {
+                        star = 1
+                    }
+                }
+            }
+            3 -> {
+                when (a) {
+                    in 0..183000 -> {
+                        star = 3
+                    }
+                    in 183000..213000 -> {
+                        star = 2
+                    }
+                    in 213000..243000 -> {
+                        star = 1
+                    }
+                }
+            }
+        }
+
+        if (number != 59 && star > 0) {
+
+            binding.next.alpha = 1f
+            binding.empty.visibility = View.GONE
+            binding.next.isClickable = true
+
+
+            when (star) {
+                1 -> {
+                    binding.starOne.visibility = View.VISIBLE
+                    binding.starTwo.visibility = View.GONE
+                    binding.starThree.visibility = View.GONE
+                }
+                2 -> {
+                    binding.starOne.visibility = View.VISIBLE
+                    binding.starTwo.visibility = View.VISIBLE
+                    binding.starThree.visibility = View.GONE
+                }
+                3 -> {
+                    binding.starOne.visibility = View.VISIBLE
+                    binding.starTwo.visibility = View.VISIBLE
+                    binding.starThree.visibility = View.VISIBLE
+                }
+            }
+
+            viewModel.saveResult(
+                GameEntity(
+                    id = args.question.id,
+                    questionList = args.question.questionList,
+                    number = number,
+                    star = star,
+                    time = totalTime,
+                    state = true,
+                    level = args.question.level,
+                    count = args.question.count
+                )
+            )
+            number++
+        } else {
+            binding.next.alpha = 0.7f
+            binding.empty.visibility = View.VISIBLE
+            binding.next.isClickable = false
+        }
+
+//        binding.restart.setOnClickListener {
+//
+//            generateAns(list[k])
+//            setQuestion(list[k])
+//
+//            viewModel.getByNumber(args.question.level, args.question.number)
+//            time.base = SystemClock.elapsedRealtime()
+//            time.start()
+//            startTime = time.base
+//            alertDialog.dismiss()
+//        }
+
+        binding.quit.setOnClickListener {
+            viewModel.openNextLevel(args.question.level, number)
+            viewModel.back()
+            alertDialog.dismiss()
+        }
+
+//        binding.next.setOnClickListener {
+//
+//            viewModel.openNextLevel(args.question.level, number)
+//            this.binding.count.text = number.toString()
+//            if (args.question.number != 60 && star > 0) {
+//
+//                generateAns(list[k])
+//                setQuestion(list[k])
+//
+//                viewModel.getByNumber(
+//                    args.question.level, number
+//                )
+//
+//                this.binding.level.text = number.toString()
+//                time.base = SystemClock.elapsedRealtime()
+//                time.start()
+//                startTime = time.base
+//                alertDialog.dismiss()
+//            }
+//        }
+        alertDialog.window!!.setBackgroundDrawable(
+            ColorDrawable(
+                Color.TRANSPARENT
+            )
+        )
+
+        alertDialog.show()
+    }
+
+
+    private fun animate() {
+
+        binding.text.animate()
+            .setDuration(2000)
+            .translationX(220f)
+            .translationY(-500f).withEndAction { binding.text.visibility = View.GONE }.start()
     }
 
 }

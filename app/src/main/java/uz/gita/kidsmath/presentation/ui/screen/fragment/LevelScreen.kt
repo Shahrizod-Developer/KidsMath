@@ -113,7 +113,9 @@ class LevelScreen : Fragment(R.layout.screen_level) {
             }
         }
         dialogBinding.yes.setOnClickListener {
-            dialog.dismiss()
+            it.onClick {
+                dialog.dismiss()
+            }
         }
 
         dialog.setView(dialogBinding.root)

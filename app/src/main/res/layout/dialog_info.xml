@@ -67,7 +67,7 @@
                     android:letterSpacing="0.1"
                     android:padding="@dimen/_10sdp"
                     android:shadowColor="@color/black"
-                    android:text="Improve your knowledge by working on interesting examples of mathematics. If you complete all the games, you have the option to regenerate the questions. By clicking the Re-generating questions button from the Settings section, the questions will be re-generated and the previous games will be deleted.\n\nGood LUCK\n\n Created by: Qosimov Shahrizod"
+                    android:text="Improve your knowledge by working on interesting examples of mathematics. If you complete all the games, you have the option to regenerate the questions. By clicking the Re-generating questions button from the Settings section, the questions will be re-generated and the previous games will be deleted.\n\nGood LUCK\n\n Created by: Qosimov Shahrizod\n\nEducation : Gita Academy"
                     android:textColor="#8B3D1E"
                     android:textSize="@dimen/_14sdp" />
             </LinearLayout>

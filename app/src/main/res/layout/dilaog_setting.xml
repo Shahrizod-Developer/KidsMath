@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_480sdp"
+    android:layout_height="wrap_content"
     android:background="@drawable/dilaog_back"
     android:elevation="@dimen/_20sdp">
 
@@ -11,22 +11,22 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50sdp"
         android:fontFamily="@font/game"
+        android:letterSpacing="0.2"
         android:shadowColor="@color/black"
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="3"
-        android:letterSpacing="0.2"
         android:text="Settings"
         android:textColor="#8B3D1E"
         android:textSize="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_50sdp"
         android:textStyle="bold"
-        app:layout_constraintVertical_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -162,11 +162,11 @@
         android:fontFamily="@font/game"
         android:gravity="center"
         android:letterSpacing="0.2"
+        android:paddingBottom="@dimen/_5sdp"
         android:shadowColor="@color/black"
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="3"
-        android:paddingBottom="@dimen/_5sdp"
         android:text="Re-generating questions"
         android:textColor="#8B3D1E"
         android:textSize="@dimen/_17sdp"
@@ -175,6 +175,23 @@
         app:layout_constraintTop_toBottomOf="@id/vibration"
         app:layout_constraintVertical_bias="0" />
 
+    <TextView
+
+        android:id="@+id/info"
+        android:layout_width="@dimen/_160sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center"
+        android:shadowColor="@color/black"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="3"
+        android:text="Clicking this button will reset all levels"
+        android:textColor="#FDA30C"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintLeft_toLeftOf="@id/shuffle"
+        app:layout_constraintRight_toRightOf="@id/shuffle"
+        app:layout_constraintTop_toBottomOf="@id/shuffle" />
 
     <TextView
 
@@ -182,6 +199,7 @@
         android:layout_width="@dimen/_60sdp"
         android:layout_height="@dimen/_60sdp"
         android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_50sdp"
         android:background="@drawable/circle_back"
         android:fontFamily="@font/game"
         android:gravity="center"
@@ -191,12 +209,12 @@
         android:shadowDy="3"
         android:shadowRadius="3"
         android:text="OK"
-        app:layout_constraintVertical_bias="0"
         android:textColor="#8B3D1E"
         android:textSize="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shuffle" />
+        app:layout_constraintTop_toBottomOf="@id/info"
+        app:layout_constraintVertical_bias="0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
