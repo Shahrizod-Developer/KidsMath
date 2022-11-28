@@ -45,7 +45,7 @@ class AppRepositoryImpl @Inject constructor(
                     }
                     questionList.add(Question(a, randomElement, b, c))
                 }
-
+                val gson = Gson()
                 val type = object : TypeToken<List<Question>>() {}.type
                 val s = gson.toJson(questionList, type)
 

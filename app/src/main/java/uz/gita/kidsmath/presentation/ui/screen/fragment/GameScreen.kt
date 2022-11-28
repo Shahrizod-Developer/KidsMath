@@ -37,7 +37,6 @@ import uz.gita.kidsmath.data.shp.MySharedPreference
 import uz.gita.kidsmath.databinding.DialogExitBinding
 import uz.gita.kidsmath.databinding.DialogWinBinding
 import uz.gita.kidsmath.databinding.ScreenGameBinding
-import uz.gita.kidsmath.presentation.adapter.QuestionAdapter
 import uz.gita.kidsmath.presentation.ui.viewmodel.GameScreenViewModel
 import uz.gita.kidsmath.presentation.ui.viewmodel.impl.GameScreenViewModelImpl
 import uz.gita.kidsmath.presentation.utils.Animation
@@ -56,7 +55,6 @@ class GameScreen : Fragment(R.layout.screen_game) {
 
     private val binding: ScreenGameBinding by viewBinding(ScreenGameBinding::bind)
     private val viewModel: GameScreenViewModel by viewModels<GameScreenViewModelImpl>()
-    private val adapter: QuestionAdapter by lazy { QuestionAdapter() }
     private lateinit var dateFormat: SimpleDateFormat
     private var totalTime: Long = 0
     private var startTime: Long = 0
@@ -219,19 +217,11 @@ class GameScreen : Fragment(R.layout.screen_game) {
                     (realTextView.x - binding.result.x).toDouble().pow(2.0)
                             + (realTextView.y - binding.result.y).toDouble().pow(2.0)
                 )
-                val diff = sqrt(
-                    (realTextView.x - fX).toDouble().pow(2.0)
-                            + (realTextView.y - fY).toDouble().pow(2.0)
-                )
-
-                Log.d("JJJ", "realTextView = " + realTextView.text.toString())
-                Log.d("JJJ", "list[${k}] = " + list[k].result.toString())
                 if (realTextView.text.toString() == list[k].result.toString()
-                    && dif < 150
-                    && abs(realTextView.x - oldX) > 300
-                    && abs(realTextView.y - oldY) > 300
+                    && dif < 100
+//                    && abs(realTextView.x - oldX) > 300
+//                    && abs(realTextView.y - oldY) > 300
                 ) {
-                    Log.d("NNN", "Salom")
                     binding.result.text = realTextView.text
                     binding.ques.visibility = View.INVISIBLE
                     realTextView.x = binding.result.x
@@ -287,8 +277,8 @@ class GameScreen : Fragment(R.layout.screen_game) {
 
                     if ((abs(targetTextView.y - realTextView.y) < 100
                                 && abs(targetTextView.x - realTextView.x) < 100)
-                        || (abs(binding.op.y - realTextView.y) < 100
-                                && abs(binding.op.x - realTextView.x) < 100)
+                        || (abs(binding.linear.y - realTextView.y) < 20
+                                && abs(binding.linear.x - realTextView.x) < 20)
                     ) {
                         if (MySharedPreference.getInstance().music) {
                             Wrong.create(requireContext())
@@ -306,8 +296,6 @@ class GameScreen : Fragment(R.layout.screen_game) {
 
     private fun generateAns(question: Question) {
         var shuffleList = ArrayList<Int>()
-
-        Log.d("MMM", "result = " + question.result.toString())
 
         when (question.result.toString().length) {
             in 1..2 -> {
@@ -340,8 +328,6 @@ class GameScreen : Fragment(R.layout.screen_game) {
         binding.ans5.text = shuffleList[4].toString()
         binding.ans6.text = shuffleList[5].toString()
         binding.ans7.text = shuffleList[6].toString()
-
-        Log.d("MMM", "answers = " + ansList.toString())
     }
 
     private fun random(n: Int, m: Int) {
@@ -349,7 +335,6 @@ class GameScreen : Fragment(R.layout.screen_game) {
         for (i in 0..5) {
             ansList.add(Random.nextInt(n, m))
         }
-        Log.d("MMM", "wrong answers = " + ansList.toString())
     }
 
     @SuppressLint("SetTextI18n")
@@ -453,44 +438,12 @@ class GameScreen : Fragment(R.layout.screen_game) {
             binding.next.isClickable = false
         }
 
-//        binding.restart.setOnClickListener {
-//
-//            generateAns(list[k])
-//            setQuestion(list[k])
-//
-//            viewModel.getByNumber(args.question.level, args.question.number)
-//            time.base = SystemClock.elapsedRealtime()
-//            time.start()
-//            startTime = time.base
-//            alertDialog.dismiss()
-//        }
-
         binding.quit.setOnClickListener {
             viewModel.openNextLevel(args.question.level, number)
             viewModel.back()
             alertDialog.dismiss()
         }
 
-//        binding.next.setOnClickListener {
-//
-//            viewModel.openNextLevel(args.question.level, number)
-//            this.binding.count.text = number.toString()
-//            if (args.question.number != 60 && star > 0) {
-//
-//                generateAns(list[k])
-//                setQuestion(list[k])
-//
-//                viewModel.getByNumber(
-//                    args.question.level, number
-//                )
-//
-//                this.binding.level.text = number.toString()
-//                time.base = SystemClock.elapsedRealtime()
-//                time.start()
-//                startTime = time.base
-//                alertDialog.dismiss()
-//            }
-//        }
         alertDialog.window!!.setBackgroundDrawable(
             ColorDrawable(
                 Color.TRANSPARENT
@@ -504,9 +457,8 @@ class GameScreen : Fragment(R.layout.screen_game) {
     private fun animate() {
 
         binding.text.animate()
-            .setDuration(2000)
-            .translationX(220f)
-            .translationY(-500f).withEndAction { binding.text.visibility = View.GONE }.start()
+            .setDuration(1200)
+            .translationY(-350f).withEndAction { binding.text.visibility = View.GONE }.start()
     }
 
 }

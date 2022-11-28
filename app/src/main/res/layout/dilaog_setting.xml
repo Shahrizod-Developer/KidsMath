@@ -196,10 +196,10 @@
     <TextView
 
         android:id="@+id/ok"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
+        android:layout_width="@dimen/_66sdp"
+        android:layout_height="@dimen/_66sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_50sdp"
+        android:layout_marginBottom="@dimen/_60sdp"
         android:background="@drawable/circle_back"
         android:fontFamily="@font/game"
         android:gravity="center"

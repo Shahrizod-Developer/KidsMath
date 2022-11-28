@@ -60,7 +60,7 @@
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="3"
-        android:textSize="@dimen/_20sdp"
+        android:textSize="@dimen/_18sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

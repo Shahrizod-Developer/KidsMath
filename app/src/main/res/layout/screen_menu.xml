@@ -7,6 +7,37 @@
 
     <com.airbnb.lottie.LottieAnimationView
 
+        android:id="@+id/donate"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.17"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/donate" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/donate"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintLeft_toLeftOf="@id/donate"
+        app:layout_constraintRight_toRightOf="@id/donate"
+        app:layout_constraintTop_toTopOf="@id/donate"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/asks" />
+
+    <com.airbnb.lottie.LottieAnimationView
+
         android:id="@+id/lo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_180sdp"
@@ -34,6 +65,7 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/birds" />
+
 
     <TextView
 
@@ -152,6 +184,25 @@
 
     <com.airbnb.lottie.LottieAnimationView
 
+        android:id="@+id/share"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.988"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/for_share_boy" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+
         android:id="@+id/infos"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
@@ -166,6 +217,23 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/info" />
+
+    <com.airbnb.lottie.LottieAnimationView
+
+        android:id="@+id/shares"
+        android:layout_width="@dimen/_22sdp"
+        android:layout_height="@dimen/_22sdp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/share"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintLeft_toLeftOf="@id/share"
+        app:layout_constraintRight_toRightOf="@id/share"
+        app:layout_constraintTop_toTopOf="@id/share"
+        app:layout_constraintVertical_bias="0"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/share" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
